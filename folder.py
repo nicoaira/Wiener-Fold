@@ -17,7 +17,7 @@ for i in range(40):
 
         secuencias = []
 
-        for k in range (200):
+        for k in range (10):
             seq, seq_tm, templateX, templateX_tm = EXPAR(16, .41)
 
             sec_temp = {
@@ -47,6 +47,13 @@ for i in range(40):
         driver.find_element(By.ID, 'seq').send_keys(secuencias_string)
         driver.find_element(By.ID, 'temp').clear()
         driver.find_element(By.ID, 'temp').send_keys('55')
+        driver.find_element(By.ID, 'Sodium').clear()
+        driver.find_element(By.ID, 'Sodium').send_keys('0.05')
+        driver.find_element(By.ID, 'Magnesium').clear()
+        driver.find_element(By.ID, 'Magnesium').send_keys('0.007273')
+        driver.find_element(By.ID, 'p').clear()
+        driver.find_element(By.ID, 'p').send_keys('50')
+
         driver.find_element(By.XPATH, '//input[@type = "submit"]').click()
 
 
