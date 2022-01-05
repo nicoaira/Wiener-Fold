@@ -71,9 +71,3 @@ def EXPAR(lenght, gc):
     seq = Seq(DNA(lenght, gc))
     templateX = seq + 'TGTGAGACTC' + seq + 'T'
     return seq, mt.Tm_NN(seq), templateX, mt.Tm_NN(templateX)
-
-
-for i in range(20):
-    seq, _, templateX, _ = EXPAR(16, .41)
-    print(seq)
-    print(seq.count('G') + seq.count('C'))
