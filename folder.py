@@ -1,8 +1,6 @@
 from seqgenerator import EXPAR
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
 import pandas as pd
 import re
@@ -17,7 +15,7 @@ for i in range(40):
 
         secuencias = []
 
-        for k in range (10):
+        for k in range (300):
             seq, seq_tm, templateX, templateX_tm = EXPAR(16, .41)
 
             sec_temp = {
