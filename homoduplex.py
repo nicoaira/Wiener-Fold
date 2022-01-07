@@ -25,11 +25,17 @@ self_dimer = driver.find_element(By.XPATH, '//*[@id="rmenu"]/div/div[6]/button')
 driver.execute_script("arguments[0].click();", self_dimer)
 time.sleep(4)
 
-prueba  = driver.find_element(By.XPATH, '//*[@id="OAResults"]')
+deltaG = driver.find_elements(By.XPATH, '//*[contains(text(), "kcal/mole")]')
 
-# resultados = driver.find_element(By.XPATH, '//*[@id="OAResults"]')
-print(prueba.text)
-print(prueba.text.find("5' "))
+deltaG_num = []
+
+for i in deltaG[1:]:
+    num = re.search(r"[-+]?\d*\.\d+|\d+", i.text).group()
+    deltaG_num.append(float(num))
+
+resultado = sum(deltaG_num)
+
+print(round(resultado, 2))
 
 
 # driver.find_element(By.ID, 'temp').clear()
