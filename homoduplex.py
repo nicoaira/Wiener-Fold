@@ -11,29 +11,29 @@ import re
 
 
 nrows = 50
-batches = 1
+batches = 3000
 
 batches_contador = 1
 
 driver = webdriver.Chrome()
 
-for i in range(3000):
+for i in range(50000):
     try:
         driver.get("https://www.idtdna.com/site/account")
-        # element_present = EC.title_contains('Integrated')
-        # WebDriverWait(driver, 1).until(element_present)
+        print('Conexion exitosa!')
         break
     except:
         print('No se pudo acceder al sitio, intentandolo nuevamente...')
 
-print('Conexion exitosa!')
 driver.find_element(By.ID, 'UserName').send_keys('wiener.fold')
 driver.find_element(By.ID, 'Password').send_keys('wiener2022')
 driver.find_element(By.ID, 'Password').send_keys(Keys.ENTER)
 
 try:
-    element_present = EC.presence_of_element_located((By.ID, 'user-logged-in-controls'))
-    WebDriverWait(driver, 30).until(element_present)
+    WebDriverWait(driver, 20
+    ).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="ProgressDialog"]/div')))
+    WebDriverWait(driver, 20
+    ).until(EC.invisibility_of_element_located((By.XPATH, '//*[@id="ProgressDialog"]/div')))
 
 except TimeoutException:
     print("Timed out, la pagina no se pudo cargar")
@@ -45,7 +45,7 @@ for batch in range(batches):
 
     print('Batch #'+str(batches_contador))
 
-    start = time.time()
+    start_batch = time.time()
 
     df = pd.read_csv('deltaG_sorted.csv')
 
@@ -55,6 +55,8 @@ for batch in range(batches):
 
 
     for i in range(nrows):
+
+        start = time.time()
 
         nro_secuencia = ((batches_contador-1)*50)+i+1
 
@@ -73,32 +75,22 @@ for batch in range(batches):
 
         sequence = dict_temp['sequence']
 
+
         driver.find_element(By.ID, 'textarea-sequence').clear()
 
         driver.find_element(By.ID, 'textarea-sequence').send_keys(sequence)
         self_dimer = driver.find_element(By.XPATH, '//*[@id="rmenu"]/div/div[6]/button')
         driver.execute_script("arguments[0].click();", self_dimer)
-        # time.sleep(2)
-
-        if nro_secuencia == 1:
-            time.sleep(4)
-        else:
-            try:
-                WebDriverWait(driver, 15
-                ).until_not(EC.presence_of_element_located((By.XPATH, '//*[contains(text(), "Loading...")]')))
-            except TimeoutException:
-                print("Timed out, no se pudo cargar la secuencia", nro_secuencia)
-                print('Secuencia salteada:', sequence)
-                continue
 
         try:
+            WebDriverWait(driver, 30
+            ).until(EC.invisibility_of_element_located((By.XPATH, '//*[@id="OAResults"]/span/img')))
             WebDriverWait(driver, 15
             ).until(EC.presence_of_element_located((By.XPATH, '//*[contains(text(), "kcal/mole")]')))
         except TimeoutException:
             print("Timed out, no se pudo cargar la secuencia", nro_secuencia)
             print('Secuencia salteada:', sequence)
             continue
-
 
 
 
@@ -117,6 +109,10 @@ for batch in range(batches):
 
 
         sequences.append(dict_temp)
+
+        end = time.time()
+
+        print('Procesado en:', round(end-start, 2), 's')
 
     df_temp = pd.DataFrame(sequences)
 
@@ -146,6 +142,6 @@ for batch in range(batches):
 
     batches_contador += 1
 
-    end = time.time()
+    end_batch = time.time()
 
-    print('Tiempo de batch=', end-start)
+    print('Tiempo de batch=', round(end_batch-start_batch, 2), 's')
