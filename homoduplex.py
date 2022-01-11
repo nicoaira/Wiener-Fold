@@ -99,7 +99,7 @@ for batch in range(batches):
         deltaG_num = []
 
         for j in deltaG[1:]:
-            num = re.search(r"[-+]?\d*\.\d+|\d+", j.text).group()
+            num = re.search(r"-?\d*\.*\d*", j.text).group()
             deltaG_num.append(float(num))
 
         dict_temp['selfdimer_dG'] = sum(deltaG_num)

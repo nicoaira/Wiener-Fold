@@ -65,7 +65,7 @@ for i in range(40):
         # Nos quedamos con el texto de los elementos encontrados
         list_seq_strings = []
         for seq in list_seq:
-            seq = re.search(r"[-+]?\d*\.\d+|\d+", seq.text).group()
+            seq = re.search(r"\d+", seq.text).group()
             list_seq_strings.append(seq)
 
         list_seq = list_seq_strings
@@ -84,7 +84,7 @@ for i in range(40):
         # los pasa a float)
 
         for dg in list_dg:
-            dg = re.search(r"[-+]?\d*\.\d+|\d+", dg.text).group()
+            dg = re.search(r"[-+]?\d*\.*\d*", dg.text).group()
             list_dg_floats.append(float(dg))
 
 
