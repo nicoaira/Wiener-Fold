@@ -53,9 +53,9 @@ def run_self_dimer(nrows, batches):
     driver.find_element(By.ID, 'Password').send_keys(Keys.ENTER)
 
     try:
-        WebDriverWait(driver, 20
+        WebDriverWait(driver, 150
         ).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="ProgressDialog"]/div')))
-        WebDriverWait(driver, 20
+        WebDriverWait(driver, 150
         ).until(EC.invisibility_of_element_located((By.XPATH, '//*[@id="ProgressDialog"]/div')))
 
     except TimeoutException:
@@ -70,17 +70,19 @@ def run_self_dimer(nrows, batches):
         print('Script #' + str(sys.argv[1]) + ' - Batch #'+str(batches_contador))
 
         start_batch = time.time()
+        time.sleep((int(sys.argv[1]))*12)
 
         df = pd.read_csv('deltaG_sorted.csv')
-
         df_temp = df[:nrows]
 
         now = datetime.now()
+        print('Dafa frame de respaldo creado')
         temp_name = 'deltaG_temp'
         temp_name +=  now.strftime('%d-%m-%Y-%H-%M-%S')
         temp_name += '.csv'
 
         df_temp.to_csv(temp_name, index = False)
+        print('Dafaframe de respaldo creado en Script #' + str(sys.argv[1]) )
 
 
         # Elimina las filas del df y lo guarda
@@ -120,9 +122,9 @@ def run_self_dimer(nrows, batches):
             driver.execute_script("arguments[0].click();", self_dimer)
 
             try:
-                WebDriverWait(driver, 30
+                WebDriverWait(driver, 140
                 ).until(EC.invisibility_of_element_located((By.XPATH, '//*[@id="OAResults"]/span/img')))
-                WebDriverWait(driver, 15
+                WebDriverWait(driver, 60
                 ).until(EC.presence_of_element_located((By.XPATH, '//*[contains(text(), "kcal/mole")]')))
             except TimeoutException:
                 print("Timed out, no se pudo cargar la secuencia", nro_secuencia)
@@ -149,7 +151,7 @@ def run_self_dimer(nrows, batches):
 
             end = time.time()
 
-            print('Procesado en:', round(end-start, 2), 's')
+            # print('Procesado en:', round(end-start, 2), 's')
 
         df_temp = pd.DataFrame(sequences)
 
