@@ -8,6 +8,9 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import pandas as pd
 import re
+from datetime import datetime
+import os
+
 
 
 nrows = 50
@@ -55,6 +58,21 @@ for batch in range(batches):
     df = pd.read_csv('deltaG_sorted.csv')
 
     df_temp = df[:nrows]
+
+    now = datetime.now()
+    temp_name = 'deltaG_temp'
+    temp_name +=  now.strftime('%d-%m-%Y-%H-%M-%S')
+    temp_name += '.csv'
+
+    print(temp_name)
+
+    df_temp.to_csv('deltaG_temp.csv', index = False)
+
+
+    # Elimina las filas del df y lo guarda
+    df_drop = df.drop(range(nrows))
+    df_drop.to_csv('deltaG_sorted.csv', index = False)
+
 
     sequences = []
 
@@ -121,9 +139,6 @@ for batch in range(batches):
 
     df_temp = pd.DataFrame(sequences)
 
-    df = df.drop(range(nrows))
-    df.to_csv('deltaG_sorted.csv', index = False)
-
     try:
         df = pd.read_csv('deltaG_final.csv')
     except:
@@ -150,3 +165,12 @@ for batch in range(batches):
     end_batch = time.time()
 
     print('Tiempo de batch=', round(end_batch-start_batch, 2), 's')
+
+print('Fin del analisis!')
+print('Borrando archivos temporales...')
+try:
+    os.remove(temp_name)
+except:
+    print('No se encontraron archivos para borrar')
+
+print('Termindo!')
