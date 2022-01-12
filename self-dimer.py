@@ -10,37 +10,36 @@ import re
 from datetime import datetime
 import os
 from multiprocessing import Pool
+import sys
 
 
 
 def run_self_dimer(nrows, batches):
 
+    print('Script #' + str(sys.argv[1]))
+
+
     batches_contador = 1
 
     driver = webdriver.Chrome()
 
-    for i in range(50000):
+    for i in range(50):
         try:
             driver.get("https://www.idtdna.com/site/account")
-            print('Conexion exitosa!')
+            print('Conexion exitosa en Script #' + str(sys.argv[1]) )
             break
         except:
             print('No se pudo acceder al sitio, intentandolo nuevamente...')
-    print('toy aca1')
 
 
     try:
-        print('toy aca2')
 
         driver.find_element(By.XPATH, '//*[@id="modal-holiday"]/div/div/div[3]/a').click()
-
-        print('toy aca3')
-
 
         # WebDriverWait(driver, 20
         # ).until_not(EC.visibility_of_element_located(By.XPATH, '//*[@id="modal-holiday"]//*[@class="modal-content"]'))
         time.sleep(5)
-        print('toy aca')
+
 
     except:
         pass
@@ -68,7 +67,7 @@ def run_self_dimer(nrows, batches):
 
     for batch in range(batches):
 
-        print('Batch #'+str(batches_contador))
+        print('Script #' + str(sys.argv[1]) + ' - Batch #'+str(batches_contador))
 
         start_batch = time.time()
 
@@ -96,9 +95,9 @@ def run_self_dimer(nrows, batches):
 
             start = time.time()
 
-            nro_secuencia = ((batches_contador-1)*50)+i+1
+            nro_secuencia = ((batches_contador-1)*nrows)+i+1
 
-            print('Secuencia #' + str(nro_secuencia))
+            print('Script #' + str(sys.argv[1]) + ' - Secuencia #' + str(nro_secuencia))
 
             dict_temp = {
                 'sequence' : df_temp.iloc[i]['sequence'],
@@ -183,10 +182,10 @@ def run_self_dimer(nrows, batches):
 
         print('Tiempo de batch=', round(end_batch-start_batch, 2), 's')
 
-    print('Fin del analisis!')
+    print('Script# ' + str(sys.argv[1]) +' - Fin del analisis!')
 
-    print('Termindo!')
 
-pool = Pool(processes=4)
 
-run_self_dimer(50, 3)
+run_self_dimer(nrows = int(sys.argv[2]), batches = int(sys.argv[3]))
+
+# run_self_dimer(nrows = 50, batches = 3)

@@ -30,3 +30,6 @@ if len(backups) > 0:
     for file in backups:
         os.remove(file)
         print('Se borro el archivo', file)
+
+else:
+    print('No hay datos para restaurar!')
