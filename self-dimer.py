@@ -60,6 +60,7 @@ for batch in range(batches):
     df_temp = df[:nrows]
 
     now = datetime.now()
+    print(now)
     temp_name = 'deltaG_temp'
     temp_name +=  now.strftime('%d-%m-%Y-%H-%M-%S')
     temp_name += '.csv'
