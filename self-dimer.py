@@ -25,8 +25,12 @@ for i in range(50000):
     except:
         print('No se pudo acceder al sitio, intentandolo nuevamente...')
 
-driver.find_element(By.ID, 'UserName').send_keys('wiener.fold')
-driver.find_element(By.ID, 'Password').send_keys('wiener2022')
+
+with open('login.txt') as f:
+    lines = f.readlines()
+
+driver.find_element(By.ID, 'UserName').send_keys(lines[0])
+driver.find_element(By.ID, 'Password').send_keys(lines[1])
 driver.find_element(By.ID, 'Password').send_keys(Keys.ENTER)
 
 try:
@@ -38,6 +42,7 @@ try:
 except TimeoutException:
     print("Timed out, la pagina no se pudo cargar")
 
+time.sleep(10)
 driver.get("https://www.idtdna.com/calc/analyzer")
 
 
