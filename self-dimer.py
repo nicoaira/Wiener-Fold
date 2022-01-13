@@ -11,6 +11,8 @@ from datetime import datetime
 import os
 from multiprocessing import Pool
 import sys
+import os
+
 
 
 
@@ -76,13 +78,29 @@ def run_self_dimer(nrows, batches):
         df_temp = df[:nrows]
 
         now = datetime.now()
-        print('Dafa frame de respaldo creado')
         temp_name = 'deltaG_temp'
         temp_name +=  now.strftime('%d-%m-%Y-%H-%M-%S')
         temp_name += '.csv'
 
-        df_temp.to_csv(temp_name, index = False)
-        print('Dafaframe de respaldo creado en Script #' + str(sys.argv[1]) )
+        found = False
+
+        for n in range(15):
+
+            if found = True:
+                break
+            else:
+                pass
+
+            df_temp.to_csv(temp_name, index = False)
+            files_names = os.listdir()
+
+            for file_name in files_names:
+                if temp_name in file_name:
+                    found = True
+                    print('Dafaframe de respaldo creado en Script #' + str(sys.argv[1]) )
+                    break
+                else:
+                    pass
 
 
         # Elimina las filas del df y lo guarda
