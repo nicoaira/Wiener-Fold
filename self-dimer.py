@@ -86,7 +86,7 @@ def run_self_dimer(nrows, batches):
 
         for n in range(15):
 
-            if found = True:
+            if found == True:
                 break
             else:
                 pass
