@@ -17,7 +17,7 @@ def DNA(lenght, gc):
     contador_A = 0
     contador_T = 0
 
-    lenght = 16
+    lenght = 14
 
 
     gc_n = GC*lenght
@@ -69,5 +69,5 @@ def DNA(lenght, gc):
 
 def EXPAR(lenght, gc):
     seq = Seq(DNA(lenght, gc))
-    templateX = seq + 'TGTGAGACTC' + seq + 'T'
+    templateX = seq + 'GACTCT' + seq[:10]
     return seq, mt.Tm_NN(seq), templateX, mt.Tm_NN(templateX)

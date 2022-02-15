@@ -15,8 +15,8 @@ for i in range(40):
 
         secuencias = []
 
-        for k in range (300):
-            seq, seq_tm, templateX, templateX_tm = EXPAR(16, .41)
+        for k in range (50):
+            seq, seq_tm, templateX, templateX_tm = EXPAR(14, .41)
 
             sec_temp = {
             'indice': k+1,
@@ -120,8 +120,8 @@ for i in range(40):
 
         df_temp = pd.DataFrame(secuencias)
 
-        df = pd.read_csv('deltaG.csv')
+        df = pd.read_csv('deltaG_14.csv')
 
         df = pd.concat([df, df_temp])
 
-        df.to_csv('deltaG.csv', index = False)
+        df.to_csv('deltaG_14.csv', index = False)

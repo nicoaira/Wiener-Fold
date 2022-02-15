@@ -86,12 +86,15 @@ def run_self_dimer(nrows, batches):
 
         for n in range(15):
 
+            print('n =', n, 'Script# ', str(sys.argv[1]))
+
             if found == True:
                 break
             else:
                 pass
 
             df_temp.to_csv(temp_name, index = False)
+
             files_names = os.listdir()
 
             for file_name in files_names:
